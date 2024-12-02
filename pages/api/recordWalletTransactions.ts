@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
-import corsHandler from "./corsHandler";
+// import corsHandler from "./corsHandler";
 
 const prisma = new PrismaClient();
 
@@ -8,7 +8,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await corsHandler(req, res);
+  // await corsHandler(req, res);
 
   switch (req.method) {
     case "GET":
@@ -43,6 +43,7 @@ async function createTransaction(req: NextApiRequest, res: NextApiResponse) {
       transactionHash,
     } = req.body;
 
+    // Validate required fields
     if (
       !fromAddress ||
       !toAddress ||
@@ -60,15 +61,15 @@ async function createTransaction(req: NextApiRequest, res: NextApiResponse) {
         toAddress,
         tokenInAddress,
         tokenOutAddress,
-        amount: parseFloat(amount),
-        slippage: parseFloat(slippage),
-        transactionHash: transactionHash || null,
+        amount: parseFloat(amount), // Ensure amount is a number
+        slippage: parseFloat(slippage), // Ensure slippage is a number
+        transactionHash: transactionHash || null, // Optional field
       },
     });
 
-    res.status(201).json(newTransaction);
+    res.status(201).json(newTransaction); // Successfully created
   } catch (error) {
-    console.error(error);
+    console.error("Error creating transaction:", error); // Log the full error
     res.status(500).json({ message: "Error creating transaction." });
   }
 }

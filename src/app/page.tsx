@@ -10,11 +10,11 @@ export default function Home() {
   const [formData, setFormData] = useState({
     fromAddress: "",
     toAddress: "",
-    tokenInAddress: "",
-    tokenOutAddress: "",
-    amount: "",
-    slippage: "",
-    transactionHash: "",
+    // tokenInAddress: "",
+    // tokenOutAddress: "",
+    // amount: "",
+    // slippage: "",
+    // transactionHash: "",
   });
 
   useEffect(() => {
@@ -40,11 +40,11 @@ export default function Home() {
       setFormData({
         fromAddress: "",
         toAddress: "",
-        tokenInAddress: "",
-        tokenOutAddress: "",
-        amount: "",
-        slippage: "",
-        transactionHash: "",
+        // tokenInAddress: "",
+        // tokenOutAddress: "",
+        // amount: "",
+        // slippage: "",
+        // transactionHash: "",
       });
       fetchTransactions();
     } catch (error) {
@@ -63,13 +63,11 @@ export default function Home() {
 
   return (
     <div className="container mx-auto p-8">
-      {/* React Hot Toast Component */}
       <Toaster />
 
       <h1 className="text-2xl font-bold mb-4">Wallet Transactions</h1>
 
-      {/* Form to Record a Transaction */}
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4 text-black">
         <input
           type="text"
           name="fromAddress"
@@ -88,7 +86,7 @@ export default function Home() {
           className="border p-2 w-full"
           required
         />
-        <input
+        {/* <input
           type="text"
           name="tokenInAddress"
           placeholder="Input Token Address"
@@ -131,7 +129,7 @@ export default function Home() {
           value={formData.transactionHash}
           onChange={handleInputChange}
           className="border p-2 w-full"
-        />
+        /> */}
         <button type="submit" className="bg-blue-500 text-white px-4 py-2">
           Record Transaction
         </button>
@@ -150,7 +148,7 @@ export default function Home() {
                 <p>
                   <strong>To:</strong> {tx.toAddress}
                 </p>
-                <p>
+                {/* <p>
                   <strong>Token In:</strong> {tx.tokenInAddress}
                 </p>
                 <p>
@@ -166,7 +164,7 @@ export default function Home() {
                   <p>
                     <strong>Transaction Hash:</strong> {tx.transactionHash}
                   </p>
-                )}
+                )} */}
               </li>
             ))}
           </ul>
