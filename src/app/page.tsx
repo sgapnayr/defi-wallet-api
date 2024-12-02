@@ -3,7 +3,6 @@
 import { WalletTransaction } from "@prisma/client";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Toaster, toast } from "react-hot-toast";
 
 export default function Home() {
   const [transactions, setTransactions] = useState<WalletTransaction[]>([]);
@@ -27,7 +26,6 @@ export default function Home() {
       setTransactions(response.data);
     } catch (error) {
       console.error(error);
-      toast.error("Failed to fetch transactions.");
     }
   };
 
@@ -36,7 +34,6 @@ export default function Home() {
 
     try {
       await axios.post("/api/recordWalletTransactions", formData);
-      toast.success("Transaction recorded successfully!");
       setFormData({
         fromAddress: "",
         toAddress: "",
@@ -49,7 +46,6 @@ export default function Home() {
       fetchTransactions();
     } catch (error) {
       console.error(error);
-      toast.error("Failed to record transaction.");
     }
   };
 
@@ -63,8 +59,6 @@ export default function Home() {
 
   return (
     <div className="container mx-auto p-8">
-      <Toaster />
-
       <h1 className="text-2xl font-bold mb-4">Wallet Transactions</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4 text-black">

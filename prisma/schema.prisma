@@ -8,13 +8,13 @@ datasource db {
 }
 
 model WalletTransaction {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
   fromAddress     String
   toAddress       String
-  tokenInAddress  String
-  tokenOutAddress String
-  amount          Float
-  slippage        Float
-  transactionHash String?  
-  createdAt       DateTime @default(now())
+  // tokenInAddress  String
+  // tokenOutAddress String
+  // amount          Float
+  // slippage        Float
+  // transactionHash String?  
+  // createdAt       DateTime @default(now())
 }

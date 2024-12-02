@@ -33,43 +33,18 @@ async function getTransactions(req: NextApiRequest, res: NextApiResponse) {
 
 async function createTransaction(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const {
-      fromAddress,
-      toAddress,
-      tokenInAddress,
-      tokenOutAddress,
-      amount,
-      slippage,
-      transactionHash,
-    } = req.body;
-
-    // Validate required fields
-    if (
-      !fromAddress ||
-      !toAddress ||
-      !tokenInAddress ||
-      !tokenOutAddress ||
-      !amount ||
-      !slippage
-    ) {
-      return res.status(400).json({ message: "Missing required fields." });
-    }
+    const { fromAddress, toAddress } = req.body;
 
     const newTransaction = await prisma.walletTransaction.create({
       data: {
         fromAddress,
         toAddress,
-        tokenInAddress,
-        tokenOutAddress,
-        amount: parseFloat(amount), // Ensure amount is a number
-        slippage: parseFloat(slippage), // Ensure slippage is a number
-        transactionHash: transactionHash || null, // Optional field
       },
     });
 
-    res.status(201).json(newTransaction); // Successfully created
+    res.status(201).json(newTransaction);
   } catch (error) {
-    console.error("Error creating transaction:", error); // Log the full error
+    console.error("Error creating transaction:", error);
     res.status(500).json({ message: "Error creating transaction." });
   }
 }
