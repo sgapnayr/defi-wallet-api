@@ -3,6 +3,7 @@
 import { WalletTransaction } from "@prisma/client";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { Toaster, toast } from "react-hot-toast";
 
 export default function Home() {
   const [transactions, setTransactions] = useState<WalletTransaction[]>([]);
@@ -15,8 +16,6 @@ export default function Home() {
     slippage: "",
     transactionHash: "",
   });
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   useEffect(() => {
     fetchTransactions();
@@ -28,18 +27,16 @@ export default function Home() {
       setTransactions(response.data);
     } catch (error) {
       console.error(error);
-      setError("Failed to fetch transactions.");
+      toast.error("Failed to fetch transactions.");
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
 
     try {
       await axios.post("/api/recordWalletTransactions", formData);
-      setSuccess("Transaction recorded successfully!");
+      toast.success("Transaction recorded successfully!");
       setFormData({
         fromAddress: "",
         toAddress: "",
@@ -52,7 +49,7 @@ export default function Home() {
       fetchTransactions();
     } catch (error) {
       console.error(error);
-      setError("Failed to record transaction.");
+      toast.error("Failed to record transaction.");
     }
   };
 
@@ -66,6 +63,9 @@ export default function Home() {
 
   return (
     <div className="container mx-auto p-8">
+      {/* React Hot Toast Component */}
+      <Toaster />
+
       <h1 className="text-2xl font-bold mb-4">Wallet Transactions</h1>
 
       {/* Form to Record a Transaction */}
@@ -136,10 +136,6 @@ export default function Home() {
           Record Transaction
         </button>
       </form>
-
-      {/* Error or Success Message */}
-      {error && <p className="text-red-500 mt-4">{error}</p>}
-      {success && <p className="text-green-500 mt-4">{success}</p>}
 
       {/* Display Transactions */}
       <div className="mt-8">
